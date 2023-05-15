@@ -1,8 +1,8 @@
 /**
  * Calculates the reward points when a transaction is above 50 dollars 
  * 
- * @param {number} amount - amount of money spent
- * @returns {number} - calculated reward points
+ * @param {number} amount - Amount of money spent
+ * @returns {number} - Calculated reward points
  */
 export function calculateAwardPoints(amount) {
     let rewardPoints = 0;

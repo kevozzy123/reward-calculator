@@ -87,7 +87,7 @@ describe("useRequest custom hook", () => {
             json: jest.fn().mockResolvedValue(mockData),
         });
 
-        const { result, waitForNextUpdate } = renderHook(() => useRequest(mockUrl));
+        const { result } = renderHook(() => useRequest(mockUrl));
 
         expect(result.current.data).toBeNull();
         expect(result.current.isLoading).toBe(true);
