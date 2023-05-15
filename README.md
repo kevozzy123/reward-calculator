@@ -22,6 +22,7 @@ npm start
 
 
 ## Folder Structure
+`
 ├── src
 │   ├── \__tests__ 
 │   ├── components
@@ -33,7 +34,7 @@ npm start
 ├── package.json
 ├── package-lock.json 
 └── .gitignore
-
+`
 **db**
 Contains db.json file. This project uses json server to simulate sending requests to api endpoint.
 
