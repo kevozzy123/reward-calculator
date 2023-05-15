@@ -24,7 +24,7 @@ npm start
 ## Folder Structure
 ```
 ├── src
-│   ├── \__tests__ 
+│   ├── __tests__ 
 │   ├── components
 │   ├── db
 │   ├── utils
