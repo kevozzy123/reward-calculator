@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import useRequest from '../../utils/useRequest'
 import style from './style.module.css'
 import { formatMonth } from '../../utils'
@@ -7,12 +7,26 @@ import { formatCustomerData } from './utils'
 const RewardPage = () => {
     const { data: transactionData, isLoading, error } = useRequest('/purchaseHistory')
 
+    const sortedCustomerData = useMemo(() => {
+        if (!transactionData) return [];
+        return formatCustomerData(transactionData).sort((a, b) => {
+            return a.customer_id - b.customer_id;
+        })
+    }, [transactionData])
+
     const sumPoints = (monthlyPoints) => {
         return monthlyPoints.reduce((accumulator, currentPoint) => {
             return accumulator + currentPoint.points
         }, 0)
     }
 
+    const sortByDate = (monthlySpending) => {
+        return monthlySpending.sort((a, b) => {
+            return new Date(a.month) - new Date(b.month);
+        })
+    }
+
+    // a simplified loading UI
     if (isLoading) {
         return (
             <div>Loading...</div>
@@ -30,7 +44,7 @@ const RewardPage = () => {
         <div className={style.rewardPage}>
             <ul className={style.customerList}>
                 {
-                    transactionData && formatCustomerData(transactionData).map(cust => {
+                    sortedCustomerData.map(cust => {
                         return (
                             <li className={style.customerItem} key={cust.customer_id}>
                                 <div className={style.customerInfoWrapper}>
@@ -41,7 +55,7 @@ const RewardPage = () => {
 
                                 <ol className={style.monthlyList}>
                                     {
-                                        cust.monthlySpending.map(month => {
+                                        sortByDate(cust.monthlySpending).map(month => {
                                             return (
                                                 <li key={month.month}>
                                                     <strong>{formatMonth(month.month)}</strong>
