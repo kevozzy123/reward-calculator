@@ -6,19 +6,19 @@ Given a record of every transaction during a three month period, calculate the r
 
 ## Instructions for running this project
 First, download all the dependencies(I tried to keep this project as minimal as possible, therefore the only dependency to download is json-server)
-`
+```
 npm install
-`
+```
 
 Start json server
-`
+```
 npm run json-server
-`
+```
 
 In another terminal, run the project
-`
+```
 npm start
-`
+```
 
 
 ## Folder Structure
