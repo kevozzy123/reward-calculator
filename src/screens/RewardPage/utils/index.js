@@ -45,6 +45,5 @@ export function formatCustomerData(transactions) {
 
     const totalSpending = Array.from(customerMap.values());
 
-    console.log(totalSpending)
     return totalSpending;
 }
