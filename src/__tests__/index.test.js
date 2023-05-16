@@ -1,7 +1,7 @@
 import { calculateAwardPoints, formatMonth } from "../utils";
 import { renderHook, act } from "@testing-library/react";
 import useRequest from "../utils/useRequest";
-import { formatCustomerData } from "../screens/RewardPage/utils";
+import { formatCustomerData } from "../utils";
 
 describe("calculate reward points", () => {
     it("should calculate points correctly for amount over 100", () => {
