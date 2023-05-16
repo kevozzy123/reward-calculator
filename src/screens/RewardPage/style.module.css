@@ -4,38 +4,27 @@
     justify-content: center;
 }
 
-.customerList,
-.monthlyList {
-    list-style-type: none;
-    margin: 0;
-    width: 1000px;
-    margin-block-start: 0;
-    margin-block-end: 0;
-    padding-inline-start: 0;
+.customerTable {
+    width: 100%;
+    max-width: 1000px;
+    border-collapse: collapse;
 }
 
-.customerItem {
-    display: flex;
-    justify-content: space-between;
-    padding: 1rem 2rem;
-    border: 1px solid grey;
-    box-shadow: 0 0 4px grey;
+.customerTable th,
+.customerTable td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #9c9c9c;
 }
 
-.customerInfoWrapper {
-    width: 260px;
+.customerTable thead {
+    background-color: #dcdcdc;
 }
 
-.customerItem p {
-    font-weight: 700;
-}
-
-.monthlyList {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    align-items: center;
+.monthlyTable {
+    width: 100%;
 }
 
 .rewardText {
-    color: orangered;
+    color: #00a700;
 }
