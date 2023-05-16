@@ -2,57 +2,68 @@
     "purchaseHistory": [
         {
             "customer_id": 1,
+            "name": "John",
             "date": 1642224000,
             "amount": 120
         },
         {
             "customer_id": 1,
+            "name": "John",
             "date": 1642224000,
             "amount": 160
         },
         {
             "customer_id": 1,
+            "name": "John",
             "date": 1642224000,
             "amount": 40
         },
         {
             "customer_id": 1,
+            "name": "John",
             "date": 1644470400,
             "amount": 80
         },
         {
             "customer_id": 1,
+            "name": "John",
             "date": 1647396108,
             "amount": 150
         },
         {
             "customer_id": 2,
+            "name": "Skylar",
             "date": 1641340800,
             "amount": 60
         },
         {
             "customer_id": 2,
+            "name": "Skylar",
             "date": 1645334400,
             "amount": 100
         },
         {
             "customer_id": 2,
+            "name": "Skylar",
             "date": 1646784000,
             "amount": 75
         },
         {
             "customer_id": 3,
-            "date": 1654070400,
+            "name": "Jesse",
+            "date": 1647396108,
             "amount": 200
         },
         {
             "customer_id": 3,
-            "date": 1654070400,
+            "name": "Jesse",
+            "date": 1647396108,
             "amount": 50
         },
         {
             "customer_id": 3,
-            "date": 1657632000,
+            "name": "Jesse",
+            "date": 1647396108,
             "amount": 300
         }
     ]
