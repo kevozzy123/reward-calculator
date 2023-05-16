@@ -1,5 +1,5 @@
 import './App.css';
-import RewardPage from './components/RewardPage/RewardPage';
+import RewardPage from './screens/RewardPage/RewardPage';
 
 function App() {
   return (

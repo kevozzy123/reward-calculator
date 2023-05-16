@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import CustomerListItem from '../components/RewardPage/components/CustomerListItem';
+import CustomerListItem from '../screens/RewardPage/components/CustomerListItem';
 
 test('renders customer ID', () => {
     const cust = {
