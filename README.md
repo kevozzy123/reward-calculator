@@ -25,7 +25,7 @@ npm start
 ```
 ├── src
 │   ├── __tests__ 
-│   ├── components
+│   ├── screens
 │   ├── db
 │   ├── utils
 |
@@ -38,7 +38,7 @@ npm start
 **db**
 Contains db.json file. This project uses json server to simulate sending requests to api endpoint.
 
-**components**
+**screens**
 Contains the jsx and css files for this project, as well as the utility functions that won't be used by other components in forseeable future.
 
 **\__tests__**
