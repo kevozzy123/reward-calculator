@@ -1,3 +1,7 @@
+const MINIMUM_AMOUNT = 50;
+const MINIMUM_DOUBLE_AMOUNT = 100;
+const POINTS_MULTIPLIER = 2;
+
 /**
  * Calculates the reward points when a transaction is above 50 dollars 
  * 
@@ -7,14 +11,12 @@
 export function calculateAwardPoints(amount) {
     let rewardPoints = 0;
 
-    if (amount > 100) {
-        const amountOver100 = amount - 100;
+    if (amount > MINIMUM_DOUBLE_AMOUNT) {
+        const amountOver100 = amount - MINIMUM_DOUBLE_AMOUNT;
 
-        rewardPoints += amountOver100 * 2 + 50;
-    }
-
-    if (amount > 50 && amount <= 100) {
-        rewardPoints += amount - 50;
+        rewardPoints += amountOver100 * POINTS_MULTIPLIER + MINIMUM_AMOUNT;
+    } else if (amount > MINIMUM_AMOUNT && amount <= MINIMUM_DOUBLE_AMOUNT) {
+        rewardPoints += amount - MINIMUM_AMOUNT;
     }
 
     return rewardPoints;
@@ -28,6 +30,8 @@ export function calculateAwardPoints(amount) {
  */
 export function formatMonth(dateString) {
     const date = new Date(dateString)
+
     const time = date.toLocaleDateString('en', { year: 'numeric', month: 'long' });
+    console.log(time)
     return time;
 }

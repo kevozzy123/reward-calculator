@@ -1,27 +1,24 @@
 import { calculateAwardPoints } from "../../../utils";
 
-/*
-    
-    {
-        customer_id: int,
-        totalAmount: int,
-        monthlyTransactions: Array({month: string, amount: int, points: int})
-    }; 
-*/
+/**
+ * 
+ * @param {Object[]} transactions 
+ * @returns The formatted array for each customer and their purchase history
+ */
 export function formatCustomerData(transactions) {
     const customerMap = new Map();
 
     for (const transaction of transactions) {
         const { customer_id, date, amount } = transaction;
 
-        const month = new Date(date * 1000).toString();
+        let month = new Date(date * 1000).toString();
 
         if (customerMap.has(customer_id)) {
-            const customerData = customerMap.get(customer_id);
+            let customerData = customerMap.get(customer_id);
             customerData.amount += amount;
 
-            const index = customerData.monthlySpending.findIndex(item => item.month === month);
-            const awardPoints = calculateAwardPoints(amount)
+            let index = customerData.monthlySpending.findIndex(item => item.month === month);
+            let awardPoints = calculateAwardPoints(amount);
 
             if (index !== -1) {
                 customerData.monthlySpending[index].amount += amount

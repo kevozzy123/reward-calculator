@@ -1,11 +1,12 @@
 import { calculateAwardPoints, formatMonth } from "../utils";
 import { renderHook, act } from "@testing-library/react";
 import useRequest from "../utils/useRequest";
+import { formatCustomerData } from "../components/RewardPage/utils";
 
 describe("calculate reward points", () => {
     it("should calculate points correctly for amount over 100", () => {
-        const amount = 150;
-        const expectedResult = 150
+        const amount = 120;
+        const expectedResult = 90
 
         const amountTwo = 500;
         const expectedResultTwo = 850;
@@ -56,7 +57,7 @@ describe("calculate reward points", () => {
 
 describe("format month", () => {
     it('should format date string into "Month Year" format', () => {
-        const dateString = '2022-01-15';
+        const dateString = '2022-01-1';
         const formattedDate = formatMonth(dateString);
 
         expect(formattedDate).toBe('January 2022');
@@ -75,12 +76,32 @@ describe("format month", () => {
         expect(formattedDate2).toBe('May 2023');
         expect(formattedDate3).toBe('May 2023');
     });
+
+    it('should throw error when format is invalid', () => {
+        let invalidDate = "dfd";
+
+        const formattedDate1 = formatMonth(invalidDate);
+
+        expect(formattedDate1).toBe('Invalid Date');
+
+    })
 })
 
 describe("useRequest custom hook", () => {
+    let originalFetch;
+    const mockUrl = '/api/data';
+
+    beforeEach(() => {
+        originalFetch = global.fetch;
+    });
+
+
+    afterEach(() => {
+        global.fetch = originalFetch;
+    });
+
     it('should fetch data successfully', async () => {
         const mockData = { id: 1, name: 'John Doe' };
-        const mockUrl = '/api/data';
 
         global.fetch = jest.fn().mockResolvedValue({
             ok: true,
@@ -103,7 +124,6 @@ describe("useRequest custom hook", () => {
     });
 
     it('should handle fetch error', async () => {
-        const mockUrl = '/api/data';
         global.fetch = jest.fn().mockRejectedValue(new Error('Network error'));
 
         const { result } = renderHook(() => useRequest(mockUrl));
@@ -120,4 +140,76 @@ describe("useRequest custom hook", () => {
         expect(result.current.isLoading).toBe(false);
         expect(result.current.error).toEqual(new Error('Network error'));
     });
+
+    it("should throw pre-defined error message when responce is not ok", async () => {
+        const mockData = { id: 1, name: 'John Doe' };
+
+        global.fetch = jest.fn().mockResolvedValue({
+            ok: false,
+            json: jest.fn().mockResolvedValue(mockData),
+        });
+
+        const { result } = renderHook(() => useRequest(mockUrl));
+
+        expect(result.current.data).toBeNull();
+        expect(result.current.isLoading).toBe(true);
+        expect(result.current.error).toBeNull();
+
+        await act(async () => {
+            await new Promise((resolve) => setTimeout(resolve, 0));
+        });
+
+        expect(result.current.data).toBeNull();
+        expect(result.current.isLoading).toBe(false);
+        expect(result.current.error).toEqual(new Error('Network response was not ok'));
+    })
 })
+
+describe('formatCustomerData', () => {
+    let transactions;
+
+    beforeEach(() => {
+        transactions = [
+            {
+                customer_id: 1,
+                date: 1642224000,
+                amount: 120,
+            },
+            {
+                customer_id: 1,
+                date: 1642224000,
+                amount: 160,
+            },
+            {
+                customer_id: 1,
+                date: 1643643600,
+                amount: 80,
+            },
+        ];
+    });
+
+    it('should calculate total spending and points correctly for a single customer with multiple transactions', () => {
+        const expectedOutput = [
+            {
+                customer_id: 1,
+                amount: 360,
+                monthlySpending: [
+                    {
+                        month: "Sat Jan 15 2022 00:20:00 GMT-0500 (北美东部标准时间)",
+                        amount: 280,
+                        points: 260
+                    },
+                    {
+                        month: "Mon Jan 31 2022 10:40:00 GMT-0500 (北美东部标准时间)",
+                        amount: 80,
+                        points: 30
+                    },
+                ],
+            },
+        ];
+
+        const result = formatCustomerData(transactions);
+
+        expect(result).toEqual(expectedOutput);
+    });
+});
