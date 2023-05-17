@@ -58,14 +58,16 @@ export function formatCustomerData(transactions) {
     for (const transaction of transactions) {
         const { customer_id, name, date, amount } = transaction;
 
-        let month = new Date(date * 1000).toString();
+        let month = formatMonth(new Date(date * 1000).toString());
+        let awardPoints = calculateAwardPoints(amount);
 
         if (customerMap.has(customer_id)) {
             let customerData = customerMap.get(customer_id);
             customerData.amount += amount;
 
             let index = customerData.monthlySpending.findIndex(item => item.month === month);
-            let awardPoints = calculateAwardPoints(amount);
+
+            customerData.totalPoints += awardPoints
 
             if (index !== -1) {
                 customerData.monthlySpending[index].amount += amount
@@ -82,10 +84,11 @@ export function formatCustomerData(transactions) {
                 customer_id,
                 name,
                 amount,
+                totalPoints: awardPoints,
                 monthlySpending: [{
                     month: month,
                     amount: amount,
-                    points: calculateAwardPoints(amount)
+                    points: awardPoints
                 }],
             });
         }

@@ -166,44 +166,40 @@ describe("useRequest custom hook", () => {
 })
 
 describe('formatCustomerData', () => {
-    let transactions;
-
-    beforeEach(() => {
-        transactions = [
-            {
-                customer_id: 1,
-                date: 1642224000,
-                amount: 120,
-            },
-            {
-                customer_id: 1,
-                date: 1642224000,
-                amount: 160,
-            },
-            {
-                customer_id: 1,
-                date: 1643643600,
-                amount: 80,
-            },
-        ];
-    });
+    let transactions = [
+        {
+            customer_id: 1,
+            name: "John",
+            date: 1642224000,
+            amount: 120,
+        },
+        {
+            customer_id: 1,
+            name: "John",
+            date: 1642224000,
+            amount: 160,
+        },
+        {
+            customer_id: 1,
+            name: "John",
+            date: 1643643600,
+            amount: 80,
+        },
+    ];
 
     it('should calculate total spending and points correctly for a single customer with multiple transactions', () => {
         const expectedOutput = [
             {
                 customer_id: 1,
                 amount: 360,
+                name: "John",
+                totalPoints: 290,
                 monthlySpending: [
                     {
-                        month: "Sat Jan 15 2022 00:20:00 GMT-0500 (北美东部标准时间)",
-                        amount: 280,
-                        points: 260
-                    },
-                    {
-                        month: "Mon Jan 31 2022 10:40:00 GMT-0500 (北美东部标准时间)",
-                        amount: 80,
-                        points: 30
-                    },
+                        month: "January 2022",
+                        amount: 360,
+                        points: 290
+                    }
                 ],
             },
         ];
