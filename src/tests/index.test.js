@@ -168,6 +168,24 @@ describe("useRequest custom hook", () => {
 
 describe('formatCustomerData', () => {
 
+<<<<<<< HEAD:src/tests/index.test.js
+=======
+    it('should calculate total spending and points correctly for a single customer with multiple transactions', () => {
+        const expectedOutput = [
+            {
+                customer_id: 1,
+                amount: 360,
+                name: "John",
+                totalPoints: 290,
+                monthlySpending: {
+                    "January 2022": {
+                        points: 290,
+                        amount: 360
+                    }
+                },
+            },
+        ];
+>>>>>>> 603f452 (fix bug where monthly points isnt added correctly):src/__tests__/index.test.js
 
     it('should calculate correctly for a single customer with multiple transactions in the same month', () => {
         const result = formatCustomerData(sameCustomerSameMonth.transactions);

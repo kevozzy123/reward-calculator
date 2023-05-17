@@ -27,7 +27,11 @@ const CustomerTableItem = ({ cust }) => {
                     <tbody>
                         {Object.keys(cust.monthlySpending).map((key) => (
                             <tr key={key}>
+<<<<<<< HEAD
+                                <td className={style.dateCol}>{key}</td>
+=======
                                 <td>{key}</td>
+>>>>>>> 603f452 (fix bug where monthly points isnt added correctly)
                                 <td>${cust.monthlySpending[key].amount}</td>
                                 <td>
                                     <strong className={style.rewardText}>
