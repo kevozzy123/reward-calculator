@@ -1,6 +1,6 @@
 import React from 'react'
 import style from '../style.module.css';
-import { sumPoints, sortByDate } from '../../../utils';
+import { sortByDate } from '../../../utils';
 
 const CustomerTableItem = ({ cust }) => {
 
@@ -25,13 +25,13 @@ const CustomerTableItem = ({ cust }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {sortByDate(cust.monthlySpending).map((month) => (
-                            <tr key={month.month}>
-                                <td>{month.month}</td>
-                                <td>${month.amount}</td>
+                        {Object.keys(cust.monthlySpending).map((key) => (
+                            <tr key={key}>
+                                <td>{key}</td>
+                                <td>${cust.monthlySpending[key].amount}</td>
                                 <td>
                                     <strong className={style.rewardText}>
-                                        {month.points}
+                                        {cust.monthlySpending[key].points}
                                     </strong>
                                     &nbsp;points
                                 </td>

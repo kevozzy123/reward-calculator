@@ -194,13 +194,12 @@ describe('formatCustomerData', () => {
                 amount: 360,
                 name: "John",
                 totalPoints: 290,
-                monthlySpending: [
-                    {
-                        month: "January 2022",
-                        amount: 360,
-                        points: 290
+                monthlySpending: {
+                    "January 2022": {
+                        points: 290,
+                        amount: 360
                     }
-                ],
+                },
             },
         ];
 

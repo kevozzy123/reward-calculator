@@ -41,12 +41,6 @@ export const sumPoints = (monthlyPoints) => {
     }, 0)
 }
 
-export const sortByDate = (monthlySpending) => {
-    return monthlySpending.sort((a, b) => {
-        return new Date(a.month) - new Date(b.month);
-    })
-}
-
 /**
  * 
  * @param {Object[]} transactions 
@@ -65,19 +59,15 @@ export function formatCustomerData(transactions) {
             let customerData = customerMap.get(customer_id);
             customerData.amount += amount;
 
-            let index = customerData.monthlySpending.findIndex(item => item.month === month);
-
             customerData.totalPoints += awardPoints
 
-            if (index !== -1) {
-                customerData.monthlySpending[index].amount += amount
-                customerData.monthlySpending[index].points += awardPoints
+            let monthlySpending = customerData.monthlySpending
+
+            if (monthlySpending.hasOwnProperty(month)) {
+                monthlySpending[month].points += awardPoints
+                monthlySpending[month].amount += amount
             } else {
-                customerData.monthlySpending.push({
-                    month: month,
-                    amount: amount,
-                    points: awardPoints
-                })
+                monthlySpending[month] = { points: awardPoints, amount: amount }
             }
         } else {
             customerMap.set(customer_id, {
@@ -85,11 +75,9 @@ export function formatCustomerData(transactions) {
                 name,
                 amount,
                 totalPoints: awardPoints,
-                monthlySpending: [{
-                    month: month,
-                    amount: amount,
-                    points: awardPoints
-                }],
+                monthlySpending: {
+                    [month]: { points: awardPoints, amount: amount }
+                }
             });
         }
     }
