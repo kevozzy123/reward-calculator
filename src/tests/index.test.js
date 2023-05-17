@@ -2,6 +2,7 @@ import { calculateAwardPoints, formatMonth } from "../utils";
 import { renderHook, act } from "@testing-library/react";
 import useRequest from "../utils/useRequest";
 import { formatCustomerData } from "../utils";
+import { diffCustomerDiffMonth, sameCustomerSameMonth } from "./data/transactions";
 
 describe("calculate reward points", () => {
     it("should calculate points correctly for amount over 100", () => {
@@ -166,45 +167,17 @@ describe("useRequest custom hook", () => {
 })
 
 describe('formatCustomerData', () => {
-    let transactions = [
-        {
-            customer_id: 1,
-            name: "John",
-            date: 1642224000,
-            amount: 120,
-        },
-        {
-            customer_id: 1,
-            name: "John",
-            date: 1642224000,
-            amount: 160,
-        },
-        {
-            customer_id: 1,
-            name: "John",
-            date: 1643643600,
-            amount: 80,
-        },
-    ];
 
-    it('should calculate total spending and points correctly for a single customer with multiple transactions', () => {
-        const expectedOutput = [
-            {
-                customer_id: 1,
-                amount: 360,
-                name: "John",
-                totalPoints: 290,
-                monthlySpending: {
-                    "January 2022": {
-                        points: 290,
-                        amount: 360
-                    }
-                },
-            },
-        ];
 
-        const result = formatCustomerData(transactions);
+    it('should calculate correctly for a single customer with multiple transactions in the same month', () => {
+        const result = formatCustomerData(sameCustomerSameMonth.transactions);
 
-        expect(result).toEqual(expectedOutput);
+        expect(result).toEqual(sameCustomerSameMonth.expectedOutput);
     });
+
+    it("should calculate correctly for a customers with transactions in different months", () => {
+        const result = formatCustomerData(diffCustomerDiffMonth.transactions);
+
+        expect(result).toEqual(diffCustomerDiffMonth.expectedOutput);
+    })
 });
