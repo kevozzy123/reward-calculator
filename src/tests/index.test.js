@@ -5,54 +5,16 @@ import { formatCustomerData } from "../utils";
 import { diffCustomerDiffMonth, sameCustomerSameMonth } from "./data/transactions";
 
 describe("calculate reward points", () => {
-    it("should calculate points correctly for amount over 100", () => {
-        const amount = 120;
-        const expectedResult = 90
-
-        const amountTwo = 500;
-        const expectedResultTwo = 850;
-
-        const result = calculateAwardPoints(amount);
-        const resultTwo = calculateAwardPoints(amountTwo);
-
-        expect(result).toBe(expectedResult);
-        expect(resultTwo).toBe(expectedResultTwo)
-    })
-
-    it("should calculate points for amount below 100 and over 50", () => {
-        const amount = 70;
-        const expectedResult = 20;
-
+    it.each([
+        [120, 90],
+        [500, 850],
+        [70, 20],
+        [30, 0],
+        [50, 0]
+    ])("should calculate points correctly for each amount bracket", (amount, points) => {
         const result = calculateAwardPoints(amount);
 
-        expect(result).toBe(expectedResult);
-    })
-
-    it("should have 0 point at amount below 50", () => {
-        const amount = 30;
-        const expectedResult = 0;
-
-        const result = calculateAwardPoints(amount);
-
-        expect(result).toBe(expectedResult);
-    })
-
-    it("should have 0 point at amount exactly 50", () => {
-        const amount = 50;
-        const expectedResult = 0;
-
-        const result = calculateAwardPoints(amount);
-
-        expect(result).toBe(expectedResult);
-    })
-
-    it("should have 50 point at amount exactly 100", () => {
-        const amount = 100;
-        const expectedResult = 50;
-
-        const result = calculateAwardPoints(amount);
-
-        expect(result).toBe(expectedResult);
+        expect(result).toBe(points)
     })
 })
 
@@ -64,27 +26,33 @@ describe("format month", () => {
         expect(formattedDate).toBe('January 2022');
     });
 
-    it('should handle different date strings', () => {
-        let date1 = 'Monday, 15-May-23 22:24:44 UTC';
-        let date2 = 'Mon, 15 May 2023 22:24:44 +0000';
-        let date3 = '2023-05-15T22:24:44+00:00';
+    it("should handle UTC date string", () => {
+        let date = 'Monday, 15-May-23 22:24:44 UTC';
 
-        const formattedDate1 = formatMonth(date1);
-        const formattedDate2 = formatMonth(date2);
-        const formattedDate3 = formatMonth(date3);
+        const formattedDate = formatMonth(date);
+        expect(formattedDate).toBe('May 2023');
+    })
 
-        expect(formattedDate1).toBe('May 2023');
-        expect(formattedDate2).toBe('May 2023');
-        expect(formattedDate3).toBe('May 2023');
+    it("should handle ISO date string", () => {
+        let date = 'Mon, 15 May 2023 22:24:44 +0000';
+
+        const formattedDate = formatMonth(date);
+        expect(formattedDate).toBe('May 2023');
+    })
+
+    it('should handle RFC date string', () => {
+        let date = '2023-05-15T22:24:44+00:00';
+
+        const formattedDate = formatMonth(date);
+        expect(formattedDate).toBe('May 2023');
     });
 
     it('should throw error when format is invalid', () => {
-        let invalidDate = "dfd";
+        let invalidDate = "random string";
 
         const formattedDate1 = formatMonth(invalidDate);
 
         expect(formattedDate1).toBe('Invalid Date');
-
     })
 })
 
